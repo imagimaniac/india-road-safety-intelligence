@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Evidence-based research on road accidents and passenger-car safety in India"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "Proprietary" }
+license = { text = "MIT" }
 dependencies = [
     "PyYAML>=6.0",
     "pydantic>=2.0",
