@@ -1,0 +1,62 @@
+# Global settings for india-road-safety-intelligence.
+# Every value here is an input or a guardrail, never a conclusion.
+# Values marked "pending verification" must be confirmed in Phase 3 before use.
+
+app:
+  name: "india-road-safety-intelligence"
+  version: "0.1.0"
+  # All paths are relative to the project root.
+  data_dir: "data"
+  raw_dir: "data/raw"          # original downloads / snapshots (when permitted)
+  interim_dir: "data/interim"  # partially parsed, not yet normalized
+  processed_dir: "data/processed"  # normalized, analysis-ready
+  db_path: "data/interim/irsi.db"
+  reports_dir: "reports"
+  schemas_dir: "schemas"
+
+study:
+  # Cutoff strategy: use the latest data available at build time.
+  # The concrete cutoff date is stamped into the report at build time.
+  cutoff_policy: "latest_available_at_build"
+  cutoff_date: null            # set automatically during a run; never hardcoded
+  # v1 geographic depth: national + state/UT. City-level is out of scope in v1.
+  geographic_depth: "national_state"
+  # Primary analytical objective vs context (see README).
+  primary_question: "passenger_car_safety"
+  context_question: "national_accident_patterns"
+
+# HTTP politeness for collectors. Adapts the HttpFetcher pattern from
+# ~/Projects/unified-job-portal-automation (attribution in docs/sources.md).
+http:
+  user_agent: "india-road-safety-intelligence/0.1 (local research; contact: research@localhost)"
+  timeout_seconds: 30
+  max_attempts: 3
+  base_delay_seconds: 1.0
+  max_delay_seconds: 15.0
+  min_seconds_between_requests: 1.0   # polite default; per-source overrides allowed
+  respect_robots: true
+  cache_raw: true                     # keep raw snapshots only where permitted
+
+# Refuse to present a statistic as meaningful below these thresholds.
+# Mirrors the "sample-only framing" discipline from ujpa reports/demand.py.
+analysis:
+  min_sample_size: 30                 # below this: descriptive only, no rate claims
+  default_confidence_level: 0.95
+  # Cross-protocol crash-test ratings are never compared unless explicitly qualified.
+  allow_cross_protocol_comparison: false
+
+report:
+  output: "reports/india-road-safety-report.html"
+  self_contained: true                # single HTML file, inline SVG, no external assets
+  charts: "inline_svg"                # no JS/CSS/network dependencies
+  include_source_register: true
+
+# Evidence grading dimensions (each scored 0-100, kept separate from any
+# "quality" judgement). Modeled on investment-research/scoring/evidence.py.
+evidence:
+  dimensions:
+    - primary_source        # is the claim from an original document/report?
+    - corroboration         # independently confirmed by another source?
+    - recency               # how recent relative to the cutoff?
+    - completeness          # are required fields present?
+    - identification_confidence  # how sure are we of the exact vehicle/model?

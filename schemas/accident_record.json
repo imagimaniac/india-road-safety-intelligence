@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "accident_record",
+  "additionalProperties": false,
+  "required": [
+    "geography",
+    "geo_level",
+    "year",
+    "severity",
+    "metric",
+    "source_slug",
+    "evidence_class",
+    "confidence"
+  ],
+  "properties": {
+    "geography": {
+      "type": "string"
+    },
+    "geo_level": {
+      "type": "string",
+      "enum": [
+        "national",
+        "state",
+        "district",
+        "city"
+      ]
+    },
+    "year": {
+      "type": "integer"
+    },
+    "month": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 12
+    },
+    "road_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "road_user": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "fatal",
+        "serious",
+        "minor",
+        "damage_only",
+        "unknown"
+      ]
+    },
+    "metric": {
+      "type": "string"
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "unit": {
+      "type": "string",
+      "default": "count"
+    },
+    "source_slug": {
+      "type": "string"
+    },
+    "document_id": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "evidence_class": {
+      "type": "string",
+      "enum": [
+        "observed_fact",
+        "extracted_claim",
+        "analyst_interpretation"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "unverified"
+      ]
+    }
+  }
+}

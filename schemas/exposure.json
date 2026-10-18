@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "exposure",
+  "additionalProperties": false,
+  "required": [
+    "geography",
+    "geo_level",
+    "year",
+    "vehicle_category",
+    "metric",
+    "source_slug",
+    "confidence"
+  ],
+  "properties": {
+    "geography": {
+      "type": "string"
+    },
+    "geo_level": {
+      "type": "string",
+      "enum": ["national", "state", "district", "city"]
+    },
+    "year": {
+      "type": "integer"
+    },
+    "vehicle_category": {
+      "type": "string"
+    },
+    "metric": {
+      "type": "string"
+    },
+    "value": {
+      "type": ["integer", "null"]
+    },
+    "unit": {
+      "type": "string",
+      "default": "count"
+    },
+    "source_slug": {
+      "type": "string"
+    },
+    "document_id": {
+      "type": ["integer", "null"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unverified"]
+    }
+  }
+}

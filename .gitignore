@@ -1,0 +1,39 @@
+# --- secrets / local config (never commit) ---
+.env
+*.env
+!.env.example
+
+# --- databases & caches ---
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- generated / private data (may contain downloaded or personal data) ---
+data/interim/*
+!data/interim/.gitkeep
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+# The generated HTML report is the deliverable and is committed.
+# reports/india-road-safety-report.html
+reports/*.pdf
+research/scratch/
+
+# --- raw snapshots that must not be redistributed (safety net) ---
+data/raw/**/*.pdf
+data/raw/**/*.xlsx
+
+# --- virtualenvs / editors / OS ---
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store

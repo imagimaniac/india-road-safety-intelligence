@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "crash_test",
+  "additionalProperties": false,
+  "required": [
+    "program",
+    "source_slug",
+    "is_comparable",
+    "evidence_class",
+    "confidence"
+  ],
+  "properties": {
+    "variant_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "make_slug": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_slug": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "program": {
+      "type": "string"
+    },
+    "protocol_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "test_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "market": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adult_stars": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 5
+    },
+    "child_stars": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 5
+    },
+    "overall_stars": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 5
+    },
+    "adult_occupant_protection": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "child_occupant_protection": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "safety_assist": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "equipment_tested": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "bodyshell": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_slug": {
+      "type": "string"
+    },
+    "document_id": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "is_comparable": {
+      "type": "boolean"
+    },
+    "evidence_class": {
+      "type": "string",
+      "enum": [
+        "observed_fact",
+        "extracted_claim",
+        "analyst_interpretation"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "unverified"
+      ]
+    }
+  }
+}

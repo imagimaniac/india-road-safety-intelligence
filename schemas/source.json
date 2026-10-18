@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "source",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "organization",
+    "access_method",
+    "data_type",
+    "status"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "access_method": {
+      "type": "string",
+      "enum": [
+        "official_api",
+        "bulk_download",
+        "pdf_report",
+        "structured_html",
+        "permitted_scraping",
+        "manual_only"
+      ]
+    },
+    "data_type": {
+      "type": "string",
+      "enum": [
+        "accident_stats",
+        "crash_test",
+        "recall",
+        "registration",
+        "research",
+        "news",
+        "other"
+      ]
+    },
+    "jurisdiction": {
+      "type": "string",
+      "default": "OTHER",
+      "enum": [
+        "IN",
+        "GLOBAL",
+        "OTHER"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "pending_verification",
+        "blocked",
+        "rejected"
+      ]
+    },
+    "coverage": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "licence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "permitted_use": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "terms_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attribution": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "verified_on": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

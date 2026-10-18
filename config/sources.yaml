@@ -1,0 +1,160 @@
+# Source registry.
+#
+# EVERY source must be registered here before any collection touches it.
+# This is the provenance root: no metric in the report may trace to a source
+# that is not listed below. Modeled on
+# ~/Projects/investment-research/investment_research/sources/registry.py.
+#
+# Collection is BLOCKED for any source whose status != "verified".
+#
+# Field meanings:
+#   id                stable slug used in code and provenance records
+#   organization      publishing body
+#   url               canonical landing page or API endpoint
+#   access_method     one of: official_api | bulk_download | pdf_report |
+#                     structured_html | permitted_scraping | manual_only
+#   data_type         what the source provides (accident_stats, crash_test,
+#                     recall, registration, research, news, ...)
+#   jurisdiction      IN | GLOBAL | OTHER
+#   coverage          geographic/temporal coverage (leave null until verified)
+#   licence           licence / terms basis (null until verified)
+#   permitted_use     plain-language statement of what use is allowed
+#   terms_url         link to terms/robots/policy
+#   attribution       required attribution text, if any
+#   status            verified | pending_verification | blocked | rejected
+#   verified_on       date the metadata was last checked (ISO), else null
+#   notes             caveats, gaps, known biases
+#
+# IMPORTANT: entries below are CANDIDATES. They are deliberately marked
+# "pending_verification" and carry no invented coverage, licence, or usage
+# claims. Phase 3 verifies each before it is used.
+
+version: 1
+
+sources:
+  - id: "morth-road-accidents-in-india"
+    organization: "Ministry of Road Transport and Highways (MoRTH), Government of India"
+    url: "https://morth.gov.in/backend/documents/uploaded/1755600426_RA_2022_30_Oct.pdf"
+    access_method: "pdf_report"
+    data_type: "accident_stats"
+    jurisdiction: "IN"
+    coverage:
+      geo: "India (national + state/UT)"
+      temporal: "1970-2022 (annual report series)"
+      edition: "Road Accidents in India 2022"
+    licence: "Government of India publication; factual statistics. Reuse with attribution; full document not redistributed here."
+    permitted_use: "COLLECT: parse aggregate figures with attribution. DO NOT redistribute the full PDF; raw snapshots are gitignored."
+    terms_url: null
+    attribution: "Ministry of Road Transport and Highways (MoRTH), Government of India — 'Road Accidents in India 2022'."
+    status: "verified"
+    verified_on: "2026-10-17"
+    notes: "Primary national accident statistics series. Report notes data are collected from State/UT police on a calendar-year basis (UNESCAP APRAD formats). Figures for West Bengal (2015-17, 2019-20) and Tamil Nadu (2017-20) were reconciled by the publisher. Registered-vehicle and road-length columns are financial-year basis."
+
+  - id: "morth-state-wise-accidents"
+    organization: "MoRTH (via data.opencity.in public-domain mirror)"
+    url: "https://data.opencity.in/dataset/33d29ab0-f9e8-4fc7-b404-c93c1ed8e1b8/resource/115647dd-4e46-4a22-8638-bd230edbcca4/download/road-accidents-2024-states-road-accidents.csv"
+    access_method: "bulk_download"
+    data_type: "accident_stats"
+    jurisdiction: "IN"
+    coverage:
+      geo: "India (state/UT)"
+      temporal: "2020-2024 (accidents per year)"
+    licence: "Public Domain (as stated by data.opencity.in); underlying figures from MoRTH."
+    permitted_use: "COLLECT: attribute to MoRTH via data.opencity.in. CSV is a small derived table."
+    terms_url: "https://data.opencity.in/dataset/state-wise-number-of-road-accidents"
+    attribution: "MoRTH, 'Road Accidents in India' series, via data.opencity.in (Public Domain)."
+    status: "verified"
+    verified_on: "2026-10-17"
+    notes: "State/UT-wise total accidents 2020-2024. Total-accidents only (no fatality split in this file); use MoRTH report for the fatality series."
+
+  - id: "data-gov-in"
+    organization: "Open Government Data Platform India (NIC)"
+    url: "https://data.gov.in/"
+    access_method: "official_api"
+    data_type: "accident_stats"
+    jurisdiction: "IN"
+    coverage: null
+    licence: null
+    permitted_use: "PENDING VERIFICATION — confirm per-dataset licence (often GODL-India) and API terms."
+    terms_url: null
+    attribution: null
+    status: "pending_verification"
+    verified_on: null
+    notes: "Prefer API/bulk CSV over HTML scraping. Validate publication dates and dataset definitions."
+
+  - id: "bharat-ncap"
+    organization: "Central Institute of Road Transport (CIRT) / Bharat NCAP"
+    url: "https://www.bharatncap.org/"
+    access_method: "structured_html"
+    data_type: "crash_test"
+    jurisdiction: "IN"
+    coverage: null
+    licence: null
+    permitted_use: "BLOCKED during reconnaissance — site (bharatncap.org) did not respond within timeouts. Re-verify availability and terms before use."
+    terms_url: null
+    attribution: null
+    status: "blocked"
+    verified_on: "2026-10-17"
+    notes: "India-specific crash tests. Site unreachable at build time; do not substitute Global NCAP data for Bharat NCAP results."
+
+  - id: "global-ncap"
+    organization: "Global New Car Assessment Programme (Global NCAP)"
+    url: "https://www.globalncap.org/results"
+    access_method: "structured_html"
+    data_type: "crash_test"
+    jurisdiction: "GLOBAL"
+    coverage:
+      geo: "India-market models tested by Global NCAP"
+      temporal: "as published (results page + PDF fact sheets)"
+    licence: "Published consumer-information results. Extract factual figures with attribution; full PDFs not redistributed here."
+    permitted_use: "COLLECT: parse model-level protection POINTS, bodyshell integrity and listed safety equipment with attribution. DO NOT publish star ratings (not reliably extractable). DO NOT compare across protocol versions."
+    terms_url: null
+    attribution: "Global NCAP (globalncap.org) crash-test fact sheets."
+    status: "verified"
+    verified_on: "2026-10-17"
+    notes: "Historically tested many India-market models. Star ratings are NOT extracted (region-based parsing misassigned adult/child). Objective protection points and stated protocol maxima ARE extracted. Do NOT assume an overseas spec equals the India spec; record the tested variant."
+
+  - id: "euro-ncap"
+    organization: "European New Car Assessment Programme (Euro NCAP)"
+    url: "https://www.euroncap.com/"
+    access_method: "structured_html"
+    data_type: "crash_test"
+    jurisdiction: "OTHER"
+    coverage: null
+    licence: null
+    permitted_use: "PENDING VERIFICATION — only relevant where an India-market model shares a tested platform/spec; qualify heavily."
+    terms_url: null
+    attribution: null
+    status: "pending_verification"
+    verified_on: null
+    notes: "Different protocol, fleet and equipment. Never compare star ratings across programs without explicit qualification."
+
+  - id: "peer-reviewed-research"
+    organization: "Various (journals, institutional studies)"
+    url: null
+    access_method: "manual_only"
+    data_type: "research"
+    jurisdiction: "OTHER"
+    coverage: null
+    licence: null
+    permitted_use: "PENDING VERIFICATION — cite and summarise only; do not redistribute copyrighted full text."
+    terms_url: null
+    attribution: null
+    status: "pending_verification"
+    verified_on: null
+    notes: "Used for exposure-adjusted risk, injury outcomes and limitations of crash-test ratings."
+
+  - id: "news-investigative"
+    organization: "Various credible outlets"
+    url: null
+    access_method: "manual_only"
+    data_type: "news"
+    jurisdiction: "IN"
+    coverage: null
+    licence: null
+    permitted_use: "PENDING VERIFICATION — cite with URL and date; treat as low-reliability evidence; a headline is not reliable vehicle-ID evidence."
+    terms_url: null
+    attribution: null
+    status: "pending_verification"
+    verified_on: null
+    notes: "Only collected after the workflow is proven on a small, diverse sample. Grade reliability per item."
